@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "amazon",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,14 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.5.2",
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.3.1",
     "react-helmet-async": "^2.0.5",
     "react-router-bootstrap": "^0.26.2",
     "react-router-dom": "^6.23.1",
+    "react-spinners": "^0.13.8",
     "react-toastify": "^10.0.5"
   },
   "devDependencies": {

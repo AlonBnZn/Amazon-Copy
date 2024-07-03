@@ -109,20 +109,20 @@ main {
 @media screen and (max-width: 1024px) {
   .align-arrow-right {
     /* left: 120px;
-        top: calc(50% - 8px);
-        transform: none; */
+      top: calc(50% - 8px);
+      transform: none; */
     visibility: collapse;
   }
 }
 
 /* @media (max-width: 767px) {
-      .container {
-        width: 100%;
-        padding-right: 20px;
-        padding-left: 20px;
-        min-width: 320px;
-      }
-    } */
+    .container {
+      width: 100%;
+      padding-right: 20px;
+      padding-left: 20px;
+      min-width: 320px;
+    }
+  } */
 
 .backgroundHomePage {
   /* background: url('https://m.media-amazon.com/images/I/81d5OrWJAkL._SX3000_.jpg') no-repeat center center fixed; */
@@ -135,4 +135,8 @@ main {
 .highlight-current-page {
   background-color: #f0c040 !important;
   color: #000000 !important;
+}
+
+a {
+  text-decoration: none;
 }

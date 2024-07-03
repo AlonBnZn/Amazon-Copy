@@ -1,16 +1,22 @@
 import Product from "../models/Product.js";
-import User from "../models/User.js";
+import User from "../models/User.model.js";
 import data from "../data.js";
 
 const seedData = async (req, res) => {
   try {
-    const [createdProdects, createdUsers] = await Promise.all([
-      Product.deleteMany({}).then(() => Product.insertMany(data.products)),
-      User.deleteMany({}).then(() => User.insertMany(data.users)),
+    await Promise.all([Product.deleteMany({}), User.deleteMany({})]);
+
+    let products;
+    let users;
+
+    await Promise.all([
+      (products = Product.insertMany(data.products)),
+      (users = User.insertMany(data.users)),
     ]);
-    res.send({ createdProdects, createdUsers });
+
+    res.send({ products, users });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 };
 
