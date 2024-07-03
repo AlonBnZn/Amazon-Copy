@@ -10,6 +10,7 @@ import SerchBox from "../../SearchBox";
 import { Dropdown, DropdownButton, NavDropdown } from "react-bootstrap";
 import { Store } from "../../../Store";
 import { useContext } from "react";
+import { USER_SIGNOUT } from "../../../actions";
 
 export default function Header() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -18,8 +19,11 @@ export default function Header() {
   const navigate = useNavigate();
 
   const handleLogOut = () => {
-    localStorage.clear();
-    navigate("/signin");
+    ctxDispatch({ type: USER_SIGNOUT });
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("cartItems");
+    localStorage.removeItem("ShippingAddres");
+    localStorage.removeItem("paymentMethod");
   };
 
   return (
@@ -51,8 +55,12 @@ export default function Header() {
                   <NavDropdown.Item>Order History</NavDropdown.Item>
                 </LinkContainer>
                 <NavDropdown.Divider />
-                {/* TODO: signout on click function */}
-                <Link to={"#signout"} className="dropdown-item">
+
+                <Link
+                  onClick={handleLogOut}
+                  to={"#signout"}
+                  className="dropdown-item"
+                >
                   Sign Out
                 </Link>
               </NavDropdown>

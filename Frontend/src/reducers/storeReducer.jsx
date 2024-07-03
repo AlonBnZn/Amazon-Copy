@@ -1,4 +1,4 @@
-import { ADD_TO_CART, USER_SIGNIN } from "../actions";
+import { ADD_TO_CART, USER_SIGNIN, USER_SIGNOUT } from "../actions";
 
 const storeReducer = (state, { type, payload }) => {
   switch (type) {
@@ -19,6 +19,13 @@ const storeReducer = (state, { type, payload }) => {
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
 
       return { ...state, cart: { ...state.cart, cartItems } };
+    }
+    case USER_SIGNOUT: {
+      return {
+        ...state,
+        userInfo: null,
+        cart: { cartItems: [], shippingAddres: {}, paymentMethod: "" },
+      };
     }
   }
 };
