@@ -1,12 +1,3 @@
-
-const Footer = () => {
-  return (
-    <div className="text-center mb-1">Not actually Amazon</div>
-  )
+export default function Footer() {
+  return <div className="text-center mb-1">Not Actually amazon</div>;
 }
-
-export default Footer
-
-
-
-// /rface --> short cut 

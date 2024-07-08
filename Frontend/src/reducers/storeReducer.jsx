@@ -1,4 +1,9 @@
-import { ADD_TO_CART, USER_SIGNIN, USER_SIGNOUT } from "../actions";
+import {
+  ADD_TO_CART,
+  USER_SIGNIN,
+  USER_SIGNOUT,
+  REMOVE_FROM_CART,
+} from "../actions";
 
 const storeReducer = (state, { type, payload }) => {
   switch (type) {
@@ -16,6 +21,14 @@ const storeReducer = (state, { type, payload }) => {
           )
         : [...state.cart.cartItems, newItem];
 
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+      return { ...state, cart: { ...state.cart, cartItems } };
+    }
+    case REMOVE_FROM_CART: {
+      const cartItems = state.cart.cartItems.filter(
+        (item) => item._id !== payload._id
+      );
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
 
       return { ...state, cart: { ...state.cart, cartItems } };

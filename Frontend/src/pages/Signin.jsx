@@ -1,13 +1,13 @@
-import React, { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
-import Title from "../components/shered/Title";
+import Title from "../components/shared/Title";
 import { Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamation } from "@fortawesome/free-solid-svg-icons";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faExclamation } from "@fortawesome/free-solid-svg-icons";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import amazonLogo from "../assets/img/amazon-logo.png";
-import Error from "../components/shered/erorr/error";
+import Error from "../components/shared/erorr/error";
 import axios from "axios";
 import { Store } from "../Store";
 import { USER_SIGNIN } from "../actions";
@@ -16,7 +16,12 @@ export default function Signin() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-  const { dispatch: ctxDispatch } = useContext(Store);
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { userInfo } = state;
+  const { search } = useLocation();
+  const redirectInUrl = new URLSearchParams(search).get("redirect");
+  const redirect = redirectInUrl ? redirectInUrl : "/";
+
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,7 +40,7 @@ export default function Signin() {
       localStorage.setItem("userInfo", JSON.stringify(data)); // Save the token for future requests
 
       console.log("success");
-      navigate("/");
+      navigate(redirect || "/");
     } catch (error) {
       console.error("There was an error making the request:", error);
       if (error.response) {
@@ -55,15 +60,20 @@ export default function Signin() {
       }
     }
   };
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [navigate, redirect, userInfo]);
 
   return (
     <div>
       {errorMessage && <Error errorMessage={errorMessage} />}
       <img
         src={amazonLogo}
-        className="d-flex justify-content-center align-items-center"
         alt="AmazonLogo"
-        width={"100px"}
+        width={"200px"}
+        style={{ display: "flex", justifyContent: "center" }}
       />
       <Container
         className="border rounded d-block text-center mt-5"
@@ -106,8 +116,8 @@ export default function Signin() {
             Continue
           </Button>
           <p className="mt-4" style={{ fontSize: "13px", textAlign: "start" }}>
-            By creating an account, you agree to Amazon's Conditions of Use and
-            Privacy Notice.
+            {`By creating an account, you agree to Amazon's Conditions of Use and
+            Privacy Notice.`}
           </p>
           <hr />
           <p style={{ fontSize: "13px", textAlign: "start" }}>
@@ -121,7 +131,7 @@ export default function Signin() {
           className="mt-4 bg-white border  text-black d-flex justify-content-center shadow  "
           style={{ width: "400px", height: "40px" }}
         >
-          <Link to={"/signup"} className="text-dark">
+          <Link to={`/signup?redirect=${redirect}`} className="text-dark">
             Create your Amazon account
           </Link>
         </Button>

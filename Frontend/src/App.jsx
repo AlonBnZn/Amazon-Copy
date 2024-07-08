@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/shered/header/Header";
+import Header from "./components/shared/header/Header";
 import HomePage from "./pages/homePage/HomePage";
-import Footer from "./components/shered/Footer";
+import Footer from "./components/shared/Footer";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import ProductPage from "./pages/ProductPage";
+import CartPage from "./pages/CartPage";
 function App() {
   return (
     <>
@@ -14,6 +16,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/product/:token" element={<ProductPage />} />
+            <Route path="/cart" element={<CartPage />} />
           </Routes>
 
           <Footer />

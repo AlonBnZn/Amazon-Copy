@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import Rating from "../../components/shered/rating/Rating";
+import Rating from "../../components/shared/rating/Rating";
 import { Store } from "../../Store";
 import { useContext } from "react";
 import { addToCarthandler } from "../../utils";
@@ -14,7 +14,7 @@ const Product = ({ product }) => {
 
   return (
     <Card className="product-card">
-      <Link to={`/products/${product.token}`}>
+      <Link to={`/product/${product.token}`}>
         <Card.Img
           style={{ padding: "20px" }}
           variant="top"
@@ -23,8 +23,12 @@ const Product = ({ product }) => {
         ></Card.Img>
       </Link>
       <Card.Body className="card-body">
-        <Link to={`/products/${product.token}`}>
-          <Card.Title>{product.title}</Card.Title>
+        <Link to={`/product/${product.token}`}>
+          <Card.Title>
+            {product.title.length > 60
+              ? product.title.substring(0, 50) + "..."
+              : product.title}{" "}
+          </Card.Title>
         </Link>
         {/* rating */}
         <Rating
@@ -32,7 +36,7 @@ const Product = ({ product }) => {
           numReviews={product.rating.count}
         />
         <Card.Text>{product.price}$</Card.Text>
-        <Link to={`/product/${product.token}`}>
+        <>
           {product.countInStock === 0 ? (
             <Button variant="light" disabled>
               Out of stock
@@ -45,7 +49,7 @@ const Product = ({ product }) => {
               Add to cart
             </Button>
           )}
-        </Link>
+        </>
       </Card.Body>
     </Card>
   );

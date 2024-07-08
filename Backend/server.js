@@ -13,6 +13,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/api/v1/seed", seedRoute);
+app.use("/api/v1/products", productRoute);
+app.use("/api/users", userRoute);
+app.use((err, req, res, next) => {
+  res.status(500).send({ message: err.message });
+});
 mongoose
   .connect(process.env.MONGO_CONNETION_STRING)
   .then(() => {
@@ -27,10 +33,4 @@ mongoose
   });
 
 //routers
-app.use("/api/users", userRoute);
-app.use("/api/v1/seed", seedRoute);
-app.use("/api/v1/products", productRoute);
-app.use((err, req, res, next) => {
-  res.status(500).send({ message: err.message });
-});
 //not found handler

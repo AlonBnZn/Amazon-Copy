@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
-import Title from "../components/shered/Title";
+import Title from "../components/shared/Title";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamation } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import amazonLogo from "../assets/img/amazon-logo.png";
-import Error from "../components/shered/erorr/error";
+import Error from "../components/shared/erorr/error";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Store } from "../Store";
+import { USER_SIGNIN } from "../actions";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -17,7 +18,20 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [reEnterPass, setRePassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+
+  const { search } = useLocation();
+  const redirectInUrl = new URLSearchParams(search).get("redirect");
+  const redirect = redirectInUrl ? redirectInUrl : "/";
+
   const navigate = useNavigate();
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { userInfo } = state;
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [navigate, redirect, userInfo]);
   const handleSubmit = async (event) => {
     event.preventDefault();
     setErrorMessage(null);
@@ -47,10 +61,13 @@ export default function Signup() {
       );
       console.log(response.data);
       // Handle successful signup (e.g., navigate to another page)
+      ctxDispatch({
+        type: USER_SIGNIN,
+        payload: response.data,
+      });
       const { token } = response.data;
       localStorage.setItem("token", token);
-      localStorage.setItem("name", name);
-
+      localStorage.setItem("userInfo", JSON.stringify(response.data));
       navigate("/");
     } catch (error) {
       console.error("There was an error making the request:", error);
@@ -148,12 +165,13 @@ export default function Signup() {
             Continue
           </Button>
           <p className="mt-4" style={{ fontSize: "13px", textAlign: "start" }}>
-            By creating an account, you agree to Amazon's Conditions of Use and
-            Privacy Notice.
+            {`By creating an account, you agree to Amazon's Conditions of Use and
+            Privacy Notice.`}
           </p>
           <hr />
           <p style={{ fontSize: "13px", textAlign: "start" }}>
-            Already have an account? <Link to="/signin">Sign in {">"}</Link>
+            Already have an account?{" "}
+            <Link to={`/signin?redirect=${redirect}`}>Sign in {">"}</Link>
           </p>
         </Form>
       </Container>

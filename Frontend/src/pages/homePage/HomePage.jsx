@@ -1,9 +1,9 @@
-import React, { useEffect, useReducer, useState } from "react";
-import Title from "../../components/shered/Title.jsx";
+import { useEffect, useReducer, useState } from "react";
+import Title from "../../components/shared/Title.jsx";
 import homePageReducer from "../../reducers/homePageReducer.jsx";
 import { GET_FAIL, GET_REQUEST, GET_SUCCESS } from "../../actions.jsx";
 import axios from "axios";
-import Loading from "../../components/shered/Loading.jsx";
+import Loading from "../../components/shared/Loading.jsx";
 import MessageBox from "../../components/MessageBox.jsx";
 import Products from "../../components/Products.jsx";
 import { Container } from "react-bootstrap";
