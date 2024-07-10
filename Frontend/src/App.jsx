@@ -6,6 +6,8 @@ import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import ProductPage from "./pages/ProductPage";
 import CartPage from "./pages/CartPage";
+import ShippingAddressPage from "./pages/ShippingAddressPage";
+import PaymentPage from "./pages/PaymentPage";
 function App() {
   return (
     <>
@@ -18,6 +20,8 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/product/:token" element={<ProductPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/shipping" element={<ShippingAddressPage />} />
+            <Route path="/payment" element={<PaymentPage />} />
           </Routes>
 
           <Footer />

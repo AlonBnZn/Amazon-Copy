@@ -45,7 +45,7 @@ const CartPage = () => {
           <ItemsInCart
             updateCartHandler={updateCartHandler}
             cartItems={cartItems}
-            removeItemHendler={removeItemHandler}
+            removeItemHandler={removeItemHandler}
           />
         </Col>
         <Col md={4}>
